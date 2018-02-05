@@ -1,6 +1,8 @@
 'use strict';
 
-const { BusinessError } = require('naf-core').Error;
+const { AssertionError } = require('assert');
+const { BusinessError, ErrorCode } = require('naf-core').Error;
+
 
 module.exports = (options = {}) => {
   return async function(ctx, next) {
@@ -16,6 +18,17 @@ module.exports = (options = {}) => {
         }
         ctx.status = 200;
         ctx.logger.warn(`BusinessError: ${err.errcode}, ${err.errmsg}`);
+        ctx.logger.debug(err);
+      } else if (err instanceof AssertionError && ctx.acceptJSON) {
+        // Assert错误
+        const errcode = ErrorCode.BADPARAM;
+        if (options.details) {
+          ctx.body = { errcode, errmsg: BusinessError.getErrorMsg(errcode), details: err.details };
+        } else {
+          ctx.body = { errcode, errmsg: BusinessError.getErrorMsg(errcode) };
+        }
+        ctx.status = 200;
+        ctx.logger.warn(`AssertionError: ${err.message}`);
         ctx.logger.debug(err);
       } else {
         throw err;
