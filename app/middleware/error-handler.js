@@ -4,7 +4,7 @@ const { AssertionError } = require('assert');
 const { BusinessError, ErrorCode } = require('naf-core').Error;
 
 
-module.exports = (options = {}) => {
+module.exports = options => {
   return async function(ctx, next) {
     try {
       await next();
