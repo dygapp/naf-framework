@@ -23,7 +23,7 @@ module.exports = (options = {}) => {
         // Assert错误
         const errcode = ErrorCode.BADPARAM;
         if (options.details) {
-          ctx.body = { errcode, errmsg: BusinessError.getErrorMsg(errcode), details: err.details };
+          ctx.body = { errcode, errmsg: BusinessError.getErrorMsg(errcode), details: err.message };
         } else {
           ctx.body = { errcode, errmsg: BusinessError.getErrorMsg(errcode) };
         }
