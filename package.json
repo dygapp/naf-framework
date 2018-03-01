@@ -1,6 +1,6 @@
 {
   "name": "naf-framework",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "naf egg framework",
   "dependencies": {
     "egg": "^2.3.0",
